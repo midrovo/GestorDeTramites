@@ -1,26 +1,27 @@
 package com.sptmf.GestorTramite.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sptmf.GestorTramite.model.herencia.Persona;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Table(name = "clientes")
-public class Cliente {
+public class Cliente extends Persona {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "cedula", length = 10, nullable = false)
     private String cedula;
-
-    @Column(name = "nombres", length = 50, nullable = false)
-    private String name;
-
-    @Column(name = "apellidos", length = 50, nullable = false)
-    private String lastname;
 
     @Column(name = "email", length = 40, nullable = false)
     private String email;
@@ -33,4 +34,12 @@ public class Cliente {
 
     @Column(name = "direccion", length = 50, nullable = false)
     private String address;
+
+    @OneToOne
+    @JoinColumn(name = "usuario_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private User user;
+
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    Set<Tramite> tramites = new HashSet<>();
 }

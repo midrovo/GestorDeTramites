@@ -1,5 +1,6 @@
 package com.sptmf.GestorTramite.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import lombok.Data;
@@ -16,4 +17,14 @@ public class Proceso {
 
     @Column(name = "detalle", length = 100, nullable = false)
     private String detail;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "departamento_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Departamento departamento;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "categoria_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private  Categoria categoria;
 }

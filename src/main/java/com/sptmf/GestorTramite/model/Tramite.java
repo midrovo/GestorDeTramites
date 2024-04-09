@@ -1,5 +1,6 @@
 package com.sptmf.GestorTramite.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,4 +39,15 @@ public class Tramite {
 
     @Column(name = "fecha_salida", nullable = false)
     private LocalDateTime dateTimeSalida;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "cliente_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Cliente cliente;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "empleado_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Empleado empleado;
+
 }
