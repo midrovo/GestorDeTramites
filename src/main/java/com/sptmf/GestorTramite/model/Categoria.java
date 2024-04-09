@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -16,4 +19,7 @@ public class Categoria {
 
     @Column(name = "Description", length = 100, nullable = false)
     private String detail;
+
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
+    Set<Proceso> procesos = new HashSet<>();
 }

@@ -1,5 +1,6 @@
 package com.sptmf.GestorTramite.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,4 +19,8 @@ public class Rol {
 
     @Column(name = "Description", length = 100, nullable = false)
     private String detail;
+
+    @OneToOne(mappedBy = "rol", cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private User user;
 }
