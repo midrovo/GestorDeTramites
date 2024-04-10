@@ -25,7 +25,7 @@ public class DepartamentoService implements DepartamentoInterface {
 
     @Override
     public Departamento getById(Long id) {
-        return null;
+        return departamentoRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -40,6 +40,13 @@ public class DepartamentoService implements DepartamentoInterface {
 
     @Override
     public Departamento delete(Long id) {
-        return null;
+        Departamento departamento = getById(id);
+
+        if(departamento == null) {
+            return null;
+        }
+        departamentoRepository.delete(departamento);
+        return departamento;
     }
 }
+

@@ -20,7 +20,7 @@ public class CategoriaService implements CategoriaInterface {
 
     @Override
     public Categoria getById(Long id) {
-        return null;
+        return categoriaRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -35,6 +35,12 @@ public class CategoriaService implements CategoriaInterface {
 
     @Override
     public Categoria delete(Long id) {
-        return null;
+        Categoria categoria = getById(id);
+
+        if(categoria == null) {
+            return null;
+        }
+        categoriaRepository.delete(categoria);
+        return categoria;
     }
 }
