@@ -15,12 +15,12 @@ public class TramiteController {
     TramiteService tramiteService;
 
     @GetMapping(value = "/mostrar-tramites")
-    public ResponseEntity<List<Tramite>> getAllTramites() {
-        return ResponseEntity.ok(tramiteService.getTramites());
+    public ResponseEntity<List<Tramite>> getTramites() {
+        return ResponseEntity.ok(tramiteService.getAll());
     }
 
     @PostMapping(value = "/crear-tramite")
     public ResponseEntity<Tramite> createTramite(@RequestBody Tramite tramite) {
-        return ResponseEntity.ok(tramiteService.createTramite(tramite));
+        return ResponseEntity.ok(tramiteService.create(tramite));
     }
 }

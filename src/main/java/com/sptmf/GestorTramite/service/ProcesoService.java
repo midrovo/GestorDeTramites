@@ -13,12 +13,27 @@ public class ProcesoService implements ProcesoInterface {
     @Autowired
     ProcesoRepository procesoRepository;
     @Override
-    public List<Proceso> getProcesses() {
+    public List<Proceso> getAll() {
         return procesoRepository.findAll();
     }
 
     @Override
-    public Proceso createProcess(Proceso proceso) {
+    public Proceso getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public Proceso create(Proceso proceso) {
         return procesoRepository.save(proceso);
+    }
+
+    @Override
+    public Proceso update(Proceso proceso) {
+        return null;
+    }
+
+    @Override
+    public Proceso delete(Long id) {
+        return null;
     }
 }

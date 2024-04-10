@@ -15,12 +15,12 @@ public class ProcesoController {
     ProcesoService procesoService;
 
     @GetMapping(value = "/mostrar-procesos")
-    public ResponseEntity<List<Proceso>> getAllProcesses() {
-        return ResponseEntity.ok(procesoService.getProcesses());
+    public ResponseEntity<List<Proceso>> getProcesses() {
+        return ResponseEntity.ok(procesoService.getAll());
     }
 
     @PostMapping(value = "/crear-proceso")
     public ResponseEntity<Proceso> createProcess(@RequestBody Proceso proceso) {
-        return ResponseEntity.ok(procesoService.createProcess(proceso));
+        return ResponseEntity.ok(procesoService.create(proceso));
     }
 }

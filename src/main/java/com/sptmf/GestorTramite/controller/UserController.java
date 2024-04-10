@@ -15,12 +15,12 @@ public class UserController {
     UserService userService;
 
     @GetMapping(value = "/mostrar-usuarios")
-    public ResponseEntity<List<User>> getAllUser() {
-        return ResponseEntity.ok(userService.getUsers());
+    public ResponseEntity<List<User>> getUser() {
+        return ResponseEntity.ok(userService.getAll());
     }
 
     @PostMapping(value = "/crear-usuario")
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        return ResponseEntity.ok(userService.createUser(user));
+        return ResponseEntity.ok(userService.create(user));
     }
 }

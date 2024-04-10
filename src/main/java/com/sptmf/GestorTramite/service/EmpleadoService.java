@@ -15,20 +15,28 @@ public class EmpleadoService implements EmpleadoInterface {
     @Autowired
     EmpleadoRepository empleadoRepository;
 
-    @Autowired
-    DepartamentoRepository  departamentoRepository;
-
     @Override
-    public List<Empleado> getEmployees() {
+    public List<Empleado> getAll() {
         return empleadoRepository.findAll();
     }
 
     @Override
-    public Empleado createEmployee(Empleado empleado) {
-        //Departamento departamento = departamentoRepository.findById(empleado.getDepartamento().getId()).orElse(null);
+    public Empleado getById(Long id) {
+        return null;
+    }
 
-        //if(departamento == null) return null;
-
+    @Override
+    public Empleado create(Empleado empleado) {
         return empleadoRepository.save(empleado);
+    }
+
+    @Override
+    public Empleado update(Empleado empleado) {
+        return null;
+    }
+
+    @Override
+    public Empleado delete(Long id) {
+        return null;
     }
 }

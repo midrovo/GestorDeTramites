@@ -15,12 +15,12 @@ public class EmpleadoController {
     EmpleadoService empleadoService;
 
     @GetMapping("/mostrar-empleados")
-    public ResponseEntity<List<Empleado>> getAllEmployees() {
-        return ResponseEntity.ok(empleadoService.getEmployees());
+    public ResponseEntity<List<Empleado>> getEmployes() {
+        return ResponseEntity.ok(empleadoService.getAll());
     }
 
     @PostMapping("/crear-empleado")
-    public ResponseEntity<Empleado> createEmployee(@RequestBody Empleado empleado) {
-        return ResponseEntity.ok(empleadoService.createEmployee(empleado));
+    public ResponseEntity<Empleado> createEmploye(@RequestBody Empleado empleado) {
+        return ResponseEntity.ok(empleadoService.create(empleado));
     }
 }

@@ -15,12 +15,12 @@ public class RolController {
     RolService rolService;
 
     @GetMapping(value = "/mostrar-roles")
-    public ResponseEntity<List<Rol>> getAllRols() {
-        return ResponseEntity.ok(rolService.getRols());
+    public ResponseEntity<List<Rol>> getRols() {
+        return ResponseEntity.ok(rolService.getAll());
     }
 
     @PostMapping(value = "/crear-rol")
     public ResponseEntity<Rol> createRol(@RequestBody Rol rol) {
-        return ResponseEntity.ok(rolService.createRol(rol));
+        return ResponseEntity.ok(rolService.create(rol));
     }
 }
