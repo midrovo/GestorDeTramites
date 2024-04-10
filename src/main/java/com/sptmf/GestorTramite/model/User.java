@@ -1,6 +1,7 @@
 package com.sptmf.GestorTramite.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sptmf.GestorTramite.model.herencia.Persona;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,7 +29,7 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Cliente cliente;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "rol_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Rol rol;

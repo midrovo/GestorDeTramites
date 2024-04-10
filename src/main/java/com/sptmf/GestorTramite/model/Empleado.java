@@ -4,15 +4,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sptmf.GestorTramite.model.herencia.Persona;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Table(name = "empleados")
 public class Empleado extends Persona {
@@ -27,8 +26,28 @@ public class Empleado extends Persona {
 
     @OneToOne
     @JoinColumn(name = "usuario_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User user;
 
-    @OneToMany(mappedBy = "empleado", cascade = CascadeType.ALL)
-    private Set<Tramite> tramites = new HashSet<>();
+    @OneToMany(mappedBy = "oficinista", cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Set<Tramite> tramitesOficinista = new HashSet<>();
+
+    @OneToMany(mappedBy = "analista", cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Set<Tramite> tramitesAnalista = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Empleado empleado = (Empleado) o;
+        return Objects.equals(this.getId(), empleado.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), this.getId());
+    }
 }

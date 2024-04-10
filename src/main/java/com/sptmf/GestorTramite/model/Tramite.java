@@ -46,8 +46,18 @@ public class Tramite {
     private Cliente cliente;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "empleado_id")
+    @JoinColumn(name = "departamento_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Empleado empleado;
+    private Departamento departamento;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "oficinista_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Empleado oficinista;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "analista_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Empleado analista;
 
 }
