@@ -20,7 +20,7 @@ public class ClienteService implements ClienteInterface {
 
     @Override
     public Cliente getById(Long id) {
-        return null;
+        return clienteRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -35,6 +35,12 @@ public class ClienteService implements ClienteInterface {
 
     @Override
     public Cliente delete(Long id) {
-        return null;
+        Cliente cliente = getById(id);
+
+        if(cliente == null) {
+            return null;
+        }
+        clienteRepository.delete(cliente);
+        return cliente;
     }
 }
