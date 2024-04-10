@@ -13,12 +13,27 @@ public class RolService implements RolInterface {
     @Autowired
     RolRepository rolRepository;
     @Override
-    public List<Rol> getRols() {
+    public List<Rol> getAll() {
         return rolRepository.findAll();
     }
 
     @Override
-    public Rol createRol(Rol rol) {
+    public Rol getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public Rol create(Rol rol) {
         return rolRepository.save(rol);
+    }
+
+    @Override
+    public Rol update(Rol rol) {
+        return null;
+    }
+
+    @Override
+    public Rol delete(Long id) {
+        return null;
     }
 }
