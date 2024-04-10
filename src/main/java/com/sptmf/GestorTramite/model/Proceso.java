@@ -19,11 +19,6 @@ public class Proceso {
     private String detail;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "departamento_id")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Departamento departamento;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "categoria_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private  Categoria categoria;

@@ -5,6 +5,10 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -20,7 +24,19 @@ public class Rol {
     @Column(name = "Description", length = 100, nullable = false)
     private String detail;
 
-    @OneToOne(mappedBy = "rol", cascade = CascadeType.ALL)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private User user;
+    @OneToMany(mappedBy = "rol", cascade = CascadeType.ALL)
+    private Set<User> users = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Rol rol = (Rol) o;
+        return id == rol.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

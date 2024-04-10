@@ -5,8 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Data
@@ -24,5 +23,21 @@ public class Departamento {
     Set<Empleado> empleados = new HashSet<>();
 
     @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL)
-    Set<Proceso> procesos = new HashSet<>();
+    Set<Categoria> categorias = new HashSet<>();
+
+    @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL)
+    Set<Tramite> tramites = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Departamento that = (Departamento) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
