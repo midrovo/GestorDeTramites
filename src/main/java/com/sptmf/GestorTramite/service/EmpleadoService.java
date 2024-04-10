@@ -1,9 +1,7 @@
 package com.sptmf.GestorTramite.service;
 
 import com.sptmf.GestorTramite.interfaces.EmpleadoInterface;
-import com.sptmf.GestorTramite.model.Departamento;
 import com.sptmf.GestorTramite.model.Empleado;
-import com.sptmf.GestorTramite.repository.DepartamentoRepository;
 import com.sptmf.GestorTramite.repository.EmpleadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +22,11 @@ public class EmpleadoService implements EmpleadoInterface {
     @Override
     public Optional<Empleado> getById(Long id) {
         return empleadoRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Empleado> getByCedula(String cedula) {
+        return empleadoRepository.findByCedula(cedula);
     }
 
     @Override

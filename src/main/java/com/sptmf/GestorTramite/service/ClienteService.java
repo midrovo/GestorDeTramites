@@ -25,6 +25,11 @@ public class ClienteService implements ClienteInterface {
     }
 
     @Override
+    public Optional<Cliente> getByCedula(String cedula) {
+        return clienteRepository.findByCedula(cedula);
+    }
+
+    @Override
     public Cliente create(Cliente cliente) {
         return clienteRepository.save(cliente);
     }

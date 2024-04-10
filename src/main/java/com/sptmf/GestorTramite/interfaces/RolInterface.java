@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface RolInterface {
     List<Rol> getAll();
     Optional<Rol> getById(Long id);
+    Optional<Rol> getByName(String name);
     Rol create(Rol rol);
     Rol update(Rol rol);
     Rol delete(Long id);

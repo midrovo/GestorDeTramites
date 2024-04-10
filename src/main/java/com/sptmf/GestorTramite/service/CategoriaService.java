@@ -25,6 +25,11 @@ public class CategoriaService implements CategoriaInterface {
     }
 
     @Override
+    public Optional<Categoria> getByName(String name) {
+        return categoriaRepository.findByDetail(name);
+    }
+
+    @Override
     public Categoria create(Categoria categoria) {
         return categoriaRepository.save(categoria);
     }

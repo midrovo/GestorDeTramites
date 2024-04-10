@@ -16,7 +16,7 @@ public class Tramite {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "descripcion", length = 200, nullable = true)
+    @Column(name = "detalle", length = 200, nullable = true)
     private String detail;
 
     @Column(name = "certificado", length = 100, nullable = false)

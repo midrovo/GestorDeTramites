@@ -25,6 +25,11 @@ public class TramiteService implements TramiteInterface {
     }
 
     @Override
+    public Optional<Tramite> getByName(String name) {
+        return Optional.empty();
+    }
+
+    @Override
     public Tramite create(Tramite tramite) {
         return tramiteRepository.save(tramite);
     }

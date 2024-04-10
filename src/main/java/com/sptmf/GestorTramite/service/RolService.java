@@ -24,6 +24,11 @@ public class RolService implements RolInterface {
     }
 
     @Override
+    public Optional<Rol> getByName(String name) {
+        return rolRepository.findByRol(name);
+    }
+
+    @Override
     public Rol create(Rol rol) {
         return rolRepository.save(rol);
     }

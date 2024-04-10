@@ -25,6 +25,23 @@ public class UserService implements UserInterface {
     }
 
     @Override
+    public Optional<User> getByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public Optional<User> getByUsernameAndPassword(String username, String password) {
+        return userRepository.findByUsernameAndPassword(username, password);
+    }
+
+    @Override
+    public Boolean isValidatedByUsernameAndPassword(String username, String password) {
+        Optional<User> userOptional = getByUsernameAndPassword(username, password);
+
+        return userOptional.isPresent();
+    }
+
+    @Override
     public User create(User user) {
         return userRepository.save(user);
     }

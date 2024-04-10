@@ -1,7 +1,6 @@
 package com.sptmf.GestorTramite.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sptmf.GestorTramite.model.herencia.Persona;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -24,6 +24,11 @@ public class ProcesoService implements ProcesoInterface {
     }
 
     @Override
+    public Optional<Proceso> getByName(String name) {
+        return procesoRepository.findByDetail(name);
+    }
+
+    @Override
     public Proceso create(Proceso proceso) {
         return procesoRepository.save(proceso);
     }

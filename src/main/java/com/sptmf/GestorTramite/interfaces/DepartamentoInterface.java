@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface DepartamentoInterface {
     List<Departamento> getAll();
     Optional<Departamento> getById(Long id);
+    Optional<Departamento> getByName(String name);
     Departamento create(Departamento departamento);
     Departamento update(Departamento departamento);
     Departamento delete(Long id);

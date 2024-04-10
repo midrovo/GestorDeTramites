@@ -19,7 +19,7 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "description", length = 100, nullable = false, unique = true)
+    @Column(name = "nombre_categoria", length = 100, nullable = false, unique = true)
     private String detail;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

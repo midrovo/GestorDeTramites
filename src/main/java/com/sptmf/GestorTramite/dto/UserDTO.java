@@ -3,10 +3,11 @@ package com.sptmf.GestorTramite.dto;
 import lombok.Builder;
 import lombok.Data;
 
+@Data
 @Builder
 public class UserDTO {
-    final String username;
-    final String name;
-    final String password;
+    private final String username;
+    private final String name;
+    private final String password;
 
 }

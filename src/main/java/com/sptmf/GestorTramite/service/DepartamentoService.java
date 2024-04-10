@@ -25,6 +25,11 @@ public class DepartamentoService implements DepartamentoInterface {
     }
 
     @Override
+    public Optional<Departamento> getByName(String name) {
+        return departamentoRepository.findByDetail(name);
+    }
+
+    @Override
     public Departamento create(Departamento departamento) {
         return departamentoRepository.save(departamento);
     }

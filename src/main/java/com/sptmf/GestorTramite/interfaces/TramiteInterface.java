@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface TramiteInterface {
     List<Tramite> getAll();
     Optional<Tramite> getById(Long id);
+    Optional<Tramite> getByName(String name);
     Tramite create(Tramite tramite);
     Tramite update(Tramite tramite);
     Tramite delete(Long id);

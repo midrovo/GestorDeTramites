@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface ClienteInterface {
     List<Cliente> getAll();
     Optional<Cliente> getById(Long id);
+    Optional<Cliente> getByCedula(String cedula);
     Cliente create(Cliente cliente);
     Cliente update(Cliente cliente);
     Cliente delete(Long id);
