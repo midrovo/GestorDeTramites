@@ -18,7 +18,7 @@ public class Persona {
     @Column(name = "apellidos", length = 50, nullable = false)
     private String lastname;
 
-    @Column(name = "cedula", length = 10, nullable = false)
+    @Column(name = "cedula", length = 10, nullable = false, unique = true)
     private String cedula;
 
     @Column(name = "email", length = 40, nullable = false)

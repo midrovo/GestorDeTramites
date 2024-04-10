@@ -15,7 +15,7 @@ public class Proceso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "detalle", length = 100, nullable = false)
+    @Column(name = "detalle", length = 100, nullable = false, unique = true)
     private String detail;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

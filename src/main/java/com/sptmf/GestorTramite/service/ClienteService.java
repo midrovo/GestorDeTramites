@@ -14,12 +14,27 @@ public class ClienteService implements ClienteInterface {
     ClienteRepository clienteRepository;
 
     @Override
-    public List<Cliente> getClients() {
+    public List<Cliente> getAll() {
         return clienteRepository.findAll();
     }
 
     @Override
-    public Cliente createClient(Cliente cliente) {
+    public Cliente getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public Cliente create(Cliente cliente) {
         return clienteRepository.save(cliente);
+    }
+
+    @Override
+    public Cliente update(Cliente cliente) {
+        return null;
+    }
+
+    @Override
+    public Cliente delete(Long id) {
+        return null;
     }
 }

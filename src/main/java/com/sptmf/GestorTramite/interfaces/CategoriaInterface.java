@@ -5,6 +5,9 @@ import com.sptmf.GestorTramite.model.Categoria;
 import java.util.List;
 
 public interface CategoriaInterface {
-    List<Categoria> getCategories();
-    Categoria createCategory(Categoria categoria);
+    List<Categoria> getAll();
+    Categoria getById(Long id);
+    Categoria create(Categoria categoria);
+    Categoria update(Categoria categoria);
+    Categoria delete(Long id);
 }
