@@ -19,7 +19,7 @@ public class RolService implements RolInterface {
 
     @Override
     public Rol getById(Long id) {
-        return null;
+        return rolRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -34,6 +34,12 @@ public class RolService implements RolInterface {
 
     @Override
     public Rol delete(Long id) {
-        return null;
+        Rol rol = getById(id);
+
+        if(rol == null) {
+            return null;
+        }
+        rolRepository.delete(rol);
+        return rol;
     }
 }
