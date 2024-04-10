@@ -15,13 +15,9 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name = "clientes")
 public class Cliente extends Persona {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @OneToOne
     @JoinColumn(name = "usuario_id")
-//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User user;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
