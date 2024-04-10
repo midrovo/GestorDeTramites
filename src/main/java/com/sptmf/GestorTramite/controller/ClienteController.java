@@ -16,11 +16,11 @@ public class ClienteController {
 
     @GetMapping(value = "/mostrar-clientes")
     public ResponseEntity<List<Cliente>> getAllClient() {
-        return ResponseEntity.ok(clienteService.getClients());
+        return ResponseEntity.ok(clienteService.getAll());
     }
 
     @PostMapping(value = "/crear-cliente")
     public ResponseEntity<Cliente> createClient(@RequestBody Cliente cliente) {
-        return ResponseEntity.ok(clienteService.createClient((cliente)));
+        return ResponseEntity.ok(clienteService.create((cliente)));
     }
 }

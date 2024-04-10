@@ -17,11 +17,11 @@ public class CategoriaController {
 
     @GetMapping(value = "/mostrar-categorias")
     public ResponseEntity<List<Categoria>> getAllCategories() {
-        return ResponseEntity.ok(categoriaService.getCategories());
+        return ResponseEntity.ok(categoriaService.getAll());
     }
 
     @PostMapping(value = "/crear-categoria")
     public ResponseEntity<Categoria> createCategory(@RequestBody Categoria categoria) {
-        return ResponseEntity.ok(categoriaService.createCategory(categoria));
+        return ResponseEntity.ok(categoriaService.create(categoria));
     }
 }
