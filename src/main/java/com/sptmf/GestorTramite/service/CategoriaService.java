@@ -14,12 +14,27 @@ public class CategoriaService implements CategoriaInterface {
     CategoriaRepository categoriaRepository;
 
     @Override
-    public List<Categoria> getCategories() {
+    public List<Categoria> getAll() {
         return categoriaRepository.findAll();
     }
 
     @Override
-    public Categoria createCategory(Categoria categoria) {
+    public Categoria getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public Categoria create(Categoria categoria) {
         return categoriaRepository.save(categoria);
+    }
+
+    @Override
+    public Categoria update(Categoria categoria) {
+        return null;
+    }
+
+    @Override
+    public Categoria delete(Long id) {
+        return null;
     }
 }

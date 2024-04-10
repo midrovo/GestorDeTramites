@@ -5,7 +5,9 @@ import com.sptmf.GestorTramite.model.Cliente;
 import java.util.List;
 
 public interface ClienteInterface {
-    List<Cliente> getClients();
-    Cliente createClient(Cliente cliente);
-
+    List<Cliente> getAll();
+    Cliente getById(Long id);
+    Cliente create(Cliente cliente);
+    Cliente update(Cliente cliente);
+    Cliente delete(Long id);
 }

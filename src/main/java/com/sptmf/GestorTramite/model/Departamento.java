@@ -15,7 +15,7 @@ public class Departamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "Description", length = 100, nullable = false)
+    @Column(name = "Description", length = 100, nullable = false, unique = true)
     private String detail;
 
     @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL)
