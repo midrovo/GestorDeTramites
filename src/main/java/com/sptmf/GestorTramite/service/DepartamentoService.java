@@ -2,21 +2,17 @@ package com.sptmf.GestorTramite.service;
 
 import com.sptmf.GestorTramite.interfaces.DepartamentoInterface;
 import com.sptmf.GestorTramite.model.Departamento;
-import com.sptmf.GestorTramite.model.Empleado;
 import com.sptmf.GestorTramite.repository.DepartamentoRepository;
-import com.sptmf.GestorTramite.repository.EmpleadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DepartamentoService implements DepartamentoInterface {
     @Autowired
     DepartamentoRepository departamentoRepository;
-
-    @Autowired
-    EmpleadoRepository empleadoRepository;
 
     @Override
     public List<Departamento> getAll() {
@@ -24,8 +20,8 @@ public class DepartamentoService implements DepartamentoInterface {
     }
 
     @Override
-    public Departamento getById(Long id) {
-        return departamentoRepository.findById(id).orElse(null);
+    public Optional<Departamento> getById(Long id) {
+        return departamentoRepository.findById(id);
     }
 
     @Override
@@ -35,18 +31,20 @@ public class DepartamentoService implements DepartamentoInterface {
 
     @Override
     public Departamento update(Departamento departamento) {
-        return null;
+        return getById(departamento.getId()).isPresent() ? departamentoRepository.save(departamento) : null;
     }
 
     @Override
     public Departamento delete(Long id) {
-        Departamento departamento = getById(id);
+        Optional<Departamento> departamentoOptional = getById(id);
 
-        if(departamento == null) {
-            return null;
+        if(departamentoOptional.isPresent()) {
+            Departamento departamento = departamentoOptional.get();
+            departamentoRepository.delete(departamento);
+            return departamento;
         }
-        departamentoRepository.delete(departamento);
-        return departamento;
+
+        return null;
     }
 }
 

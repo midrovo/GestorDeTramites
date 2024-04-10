@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RolService implements RolInterface {
@@ -18,8 +19,8 @@ public class RolService implements RolInterface {
     }
 
     @Override
-    public Rol getById(Long id) {
-        return rolRepository.findById(id).orElse(null);
+    public Optional<Rol> getById(Long id) {
+        return rolRepository.findById(id);
     }
 
     @Override
@@ -29,17 +30,19 @@ public class RolService implements RolInterface {
 
     @Override
     public Rol update(Rol rol) {
-        return null;
+        return getById(rol.getId()).isPresent() ? rolRepository.save(rol) : null;
     }
 
     @Override
     public Rol delete(Long id) {
-        Rol rol = getById(id);
+        Optional<Rol> rolOptional = getById(id);
 
-        if(rol == null) {
-            return null;
+        if(rolOptional.isPresent()) {
+            Rol rol = rolOptional.get();
+            rolRepository.delete(rol);
+            return rol;
         }
-        rolRepository.delete(rol);
-        return rol;
+
+        return null;
     }
 }

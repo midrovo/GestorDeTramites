@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService implements UserInterface {
@@ -19,8 +20,8 @@ public class UserService implements UserInterface {
     }
 
     @Override
-    public User getById(Long id) {
-        return null;
+    public Optional<User> getById(Long id) {
+        return userRepository.findById(id);
     }
 
     @Override
@@ -30,11 +31,18 @@ public class UserService implements UserInterface {
 
     @Override
     public User update(User user) {
-        return null;
+        return getById(user.getId()).isPresent() ? userRepository.save(user) : null;
     }
 
     @Override
     public User delete(Long id) {
+        Optional<User> userOptional = getById(id);
+
+        if(userOptional.isPresent()) {
+            User user = userOptional.get();
+            userRepository.delete(user);
+            return user;
+        }
         return null;
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/api/categoria")
 public class CategoriaController {
     @Autowired
-    CategoriaService categoriaService;
+    private CategoriaService categoriaService;
 
     @GetMapping(value = "/mostrar-categorias")
     public ResponseEntity<List<Categoria>> getCategories() {

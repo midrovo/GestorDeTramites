@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TramiteService implements TramiteInterface {
@@ -19,8 +20,8 @@ public class TramiteService implements TramiteInterface {
     }
 
     @Override
-    public Tramite getById(Long id) {
-        return null;
+    public Optional<Tramite> getById(Long id) {
+        return tramiteRepository.findById(id);
     }
 
     @Override
@@ -30,11 +31,19 @@ public class TramiteService implements TramiteInterface {
 
     @Override
     public Tramite update(Tramite tramite) {
-        return null;
+        return getById(tramite.getId()).isPresent() ? tramiteRepository.save(tramite) : null;
     }
 
     @Override
     public Tramite delete(Long id) {
+        Optional<Tramite> tramiteOptional = getById(id);
+
+        if(tramiteOptional.isPresent()) {
+            Tramite tramite = tramiteOptional.get();
+            tramiteRepository.delete(tramite);
+            return tramite;
+        }
+
         return null;
     }
 }

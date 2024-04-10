@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmpleadoService implements EmpleadoInterface {
@@ -21,8 +22,8 @@ public class EmpleadoService implements EmpleadoInterface {
     }
 
     @Override
-    public Empleado getById(Long id) {
-        return null;
+    public Optional<Empleado> getById(Long id) {
+        return empleadoRepository.findById(id);
     }
 
     @Override
@@ -32,11 +33,19 @@ public class EmpleadoService implements EmpleadoInterface {
 
     @Override
     public Empleado update(Empleado empleado) {
-        return null;
+        return getById(empleado.getId()).isPresent() ? empleadoRepository.save(empleado) : null;
     }
 
     @Override
     public Empleado delete(Long id) {
+        Optional<Empleado> empleadoOptional = getById(id);
+
+        if(empleadoOptional.isPresent()) {
+            Empleado empleado = empleadoOptional.get();
+            empleadoRepository.delete(empleado);
+            return empleado;
+        }
+
         return null;
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProcesoService implements ProcesoInterface {
@@ -18,8 +19,8 @@ public class ProcesoService implements ProcesoInterface {
     }
 
     @Override
-    public Proceso getById(Long id) {
-        return null;
+    public Optional<Proceso> getById(Long id) {
+        return procesoRepository.findById(id);
     }
 
     @Override
@@ -29,11 +30,19 @@ public class ProcesoService implements ProcesoInterface {
 
     @Override
     public Proceso update(Proceso proceso) {
-        return null;
+        return getById(proceso.getId()).isPresent() ? procesoRepository.save(proceso) : null;
     }
 
     @Override
     public Proceso delete(Long id) {
+        Optional<Proceso> procesoOptional = getById(id);
+
+        if(procesoOptional.isPresent()) {
+            Proceso proceso = procesoOptional.get();
+            procesoRepository.delete(proceso);
+            return proceso;
+        }
+
         return null;
     }
 }

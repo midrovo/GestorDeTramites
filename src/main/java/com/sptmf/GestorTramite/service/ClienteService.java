@@ -7,11 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClienteService implements ClienteInterface {
     @Autowired
-    ClienteRepository clienteRepository;
+    private ClienteRepository clienteRepository;
 
     @Override
     public List<Cliente> getAll() {
@@ -19,8 +20,8 @@ public class ClienteService implements ClienteInterface {
     }
 
     @Override
-    public Cliente getById(Long id) {
-        return clienteRepository.findById(id).orElse(null);
+    public Optional<Cliente> getById(Long id) {
+        return clienteRepository.findById(id);
     }
 
     @Override
@@ -30,17 +31,18 @@ public class ClienteService implements ClienteInterface {
 
     @Override
     public Cliente update(Cliente cliente) {
-        return null;
+        return getById(cliente.getId()) .isPresent() ? clienteRepository.save(cliente) : null;
     }
 
     @Override
     public Cliente delete(Long id) {
-        Cliente cliente = getById(id);
+        Optional<Cliente> clienteOptional = getById(id);
 
-        if(cliente == null) {
-            return null;
-        }
-        clienteRepository.delete(cliente);
-        return cliente;
+        if(clienteOptional.isPresent()) {
+            Cliente cliente = clienteOptional.get();
+            clienteRepository.delete(cliente);
+        };
+
+        return null;
     }
 }

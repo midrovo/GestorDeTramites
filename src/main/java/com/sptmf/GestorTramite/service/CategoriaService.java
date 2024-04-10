@@ -7,11 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoriaService implements CategoriaInterface {
     @Autowired
-    CategoriaRepository categoriaRepository;
+    private CategoriaRepository categoriaRepository;
 
     @Override
     public List<Categoria> getAll() {
@@ -19,8 +20,8 @@ public class CategoriaService implements CategoriaInterface {
     }
 
     @Override
-    public Categoria getById(Long id) {
-        return categoriaRepository.findById(id).orElse(null);
+    public Optional<Categoria> getById(Long id) {
+        return categoriaRepository.findById(id);
     }
 
     @Override
@@ -30,17 +31,19 @@ public class CategoriaService implements CategoriaInterface {
 
     @Override
     public Categoria update(Categoria categoria) {
-        return null;
+        return getById(categoria.getId()).isPresent() ? categoriaRepository.save(categoria) : null;
     }
 
     @Override
     public Categoria delete(Long id) {
-        Categoria categoria = getById(id);
+        Optional<Categoria> categoriaOptional = getById(id);
 
-        if(categoria == null) {
-            return null;
+        if(categoriaOptional.isPresent()) {
+            Categoria categoria = categoriaOptional.get();
+            categoriaRepository.delete(categoria);
+            return categoria;
         }
-        categoriaRepository.delete(categoria);
-        return categoria;
+
+        return null;
     }
 }
