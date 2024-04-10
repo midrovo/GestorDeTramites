@@ -15,12 +15,12 @@ public class DepartamentoController {
     DepartamentoService departamentoService;
 
     @GetMapping(value = "/mostrar-departamentos")
-    public ResponseEntity<List<Departamento>> getAllDepartaments() {
-        return ResponseEntity.ok(departamentoService.getDepartaments());
+    public ResponseEntity<List<Departamento>> getDepartaments() {
+        return ResponseEntity.ok(departamentoService.getAll());
     }
 
     @PostMapping(value = "/crear-departamento")
     public ResponseEntity<Departamento> createDepartament(@RequestBody Departamento departamento) {
-        return ResponseEntity.ok(departamentoService.createDepartament(departamento));
+        return ResponseEntity.ok(departamentoService.create(departamento));
     }
 }

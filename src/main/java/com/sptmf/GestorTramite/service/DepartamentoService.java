@@ -19,12 +19,27 @@ public class DepartamentoService implements DepartamentoInterface {
     EmpleadoRepository empleadoRepository;
 
     @Override
-    public List<Departamento> getDepartaments() {
+    public List<Departamento> getAll() {
         return departamentoRepository.findAll();
     }
 
     @Override
-    public Departamento createDepartament(Departamento departamento) {
+    public Departamento getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public Departamento create(Departamento departamento) {
         return departamentoRepository.save(departamento);
+    }
+
+    @Override
+    public Departamento update(Departamento departamento) {
+        return null;
+    }
+
+    @Override
+    public Departamento delete(Long id) {
+        return null;
     }
 }
