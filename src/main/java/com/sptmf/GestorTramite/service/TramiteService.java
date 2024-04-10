@@ -14,12 +14,27 @@ public class TramiteService implements TramiteInterface {
     TramiteRepository tramiteRepository;
 
     @Override
-    public List<Tramite> getTramites() {
+    public List<Tramite> getAll() {
         return tramiteRepository.findAll();
     }
 
     @Override
-    public Tramite createTramite(Tramite tramite) {
+    public Tramite getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public Tramite create(Tramite tramite) {
         return tramiteRepository.save(tramite);
+    }
+
+    @Override
+    public Tramite update(Tramite tramite) {
+        return null;
+    }
+
+    @Override
+    public Tramite delete(Long id) {
+        return null;
     }
 }

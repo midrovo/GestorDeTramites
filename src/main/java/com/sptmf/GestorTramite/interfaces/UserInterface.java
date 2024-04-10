@@ -5,11 +5,9 @@ import com.sptmf.GestorTramite.model.User;
 import java.util.List;
 
 public interface UserInterface {
-    List<User> getUsers();
-    User getUserByCedula(String cedula);
-    User getUserById(Long id);
-    User getValidatedUser(String username, String password);
-    User createUser(User user);
-    User updateUser(String cedula, User user);
-    void deleteUser(User user);
+    List<User> getAll();
+    User getById(Long id);
+    User create(User user);
+    User update(User user);
+    User delete(Long id);
 }
