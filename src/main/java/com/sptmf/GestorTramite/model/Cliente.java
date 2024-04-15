@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name = "clientes")
 public class Cliente extends Persona {
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "usuario_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User user;

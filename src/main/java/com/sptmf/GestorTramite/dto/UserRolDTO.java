@@ -1,14 +1,13 @@
 package com.sptmf.GestorTramite.dto;
 
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @NoArgsConstructor
-public class UserDTO {
-    @NotEmpty
+public class UserRolDTO implements Serializable {
     private String username;
-    @NotEmpty
-    private String password;
+    private String rol;
 }

@@ -1,11 +1,15 @@
 package com.sptmf.GestorTramite.controller;
 
+import com.sptmf.GestorTramite.dto.UserDTO;
+import com.sptmf.GestorTramite.dto.UserRolDTO;
 import com.sptmf.GestorTramite.exception.CustomException;
 import com.sptmf.GestorTramite.model.User;
 import com.sptmf.GestorTramite.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +24,18 @@ public class UserController {
     @GetMapping(value = "/mostrar")
     public ResponseEntity<List<User>> getUsers() {
         return new ResponseEntity<List<User>>(userService.getAll(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/login-validate/{username}/{password}")
+    public ResponseEntity<User> getLoginValidate(
+            @PathVariable(value = "username") String username,
+            @PathVariable(value = "password") String password) throws CustomException {
+        Optional<User> userOptional = userService.getByUsernameAndPassword(username, password);
+
+        if(userOptional.isPresent())
+            return new ResponseEntity<User>(userOptional.get(), HttpStatus.OK);
+
+        throw new CustomException("No existe este usuario", HttpStatus.NOT_FOUND, "404");
     }
 
     @GetMapping(value = "/buscar/id/{id}")
@@ -45,12 +61,23 @@ public class UserController {
     }
 
     @PostMapping(value = "/crear")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
         return new ResponseEntity<User>(userService.create(user), HttpStatus.CREATED);
     }
 
+    @PostMapping(value = "/user-auth")
+    public ResponseEntity<UserRolDTO> clientLogin(@Valid @RequestBody UserDTO userDTO, BindingResult result) throws CustomException {
+        UserRolDTO userRolDTO = userService.userAuth(userDTO.getUsername(), userDTO.getPassword());
+
+        if(userRolDTO == null) {
+            throw new CustomException("Credenciales incorrectas, intente nuevamente.", HttpStatus.NOT_FOUND, "404");
+        }
+
+        return new ResponseEntity<UserRolDTO>(userRolDTO, HttpStatus.OK);
+    }
+
     @PutMapping(value = "/actualizar")
-    public ResponseEntity<User> updateUser(@RequestBody User user) throws CustomException {
+    public ResponseEntity<User> updateUser(@Valid @RequestBody User user, BindingResult result) throws CustomException {
         User usuarioActualizado = userService.update(user);
 
         if(usuarioActualizado == null)

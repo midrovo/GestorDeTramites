@@ -37,7 +37,7 @@ public class Tramite {
     @Column(name = "fecha_ingreso", nullable = false)
     private LocalDateTime dateTimeIngreso;
 
-    @Column(name = "fecha_salida", nullable = false)
+    @Column(name = "fecha_salida")
     private LocalDateTime dateTimeSalida;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

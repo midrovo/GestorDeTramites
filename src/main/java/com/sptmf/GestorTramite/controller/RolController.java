@@ -1,7 +1,7 @@
 package com.sptmf.GestorTramite.controller;
 
 import com.sptmf.GestorTramite.exception.CustomException;
-import com.sptmf.GestorTramite.model.Rol;
+import com.sptmf.GestorTramite.model.Role;
 import com.sptmf.GestorTramite.service.RolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,54 +18,54 @@ public class RolController {
     private RolService rolService;
 
     @GetMapping(value = "/mostrar")
-    public ResponseEntity<List<Rol>> getRols() {
-        return new ResponseEntity<List<Rol>>(rolService.getAll(), HttpStatus.OK);
+    public ResponseEntity<List<Role>> getRols() {
+        return new ResponseEntity<List<Role>>(rolService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/buscar/id/{id}")
-    public ResponseEntity<Rol> getRolById(@PathVariable Long id) throws CustomException {
-        Optional<Rol> rolOptional = rolService.getById(id);
+    public ResponseEntity<Role> getRolById(@PathVariable Long id) throws CustomException {
+        Optional<Role> rolOptional = rolService.getById(id);
 
         if(rolOptional.isPresent())
-            return new ResponseEntity<Rol>(rolOptional.get(), HttpStatus.OK);
+            return new ResponseEntity<Role>(rolOptional.get(), HttpStatus.OK);
 
         throw new CustomException("No existe este rol", HttpStatus.NOT_FOUND, "404");
 
     }
 
     @GetMapping(value = "/buscar/{name}")
-    public ResponseEntity<Rol> getRolByName(@PathVariable String name) throws CustomException {
-        Optional<Rol> rolOptional = rolService.getByName(name);
+    public ResponseEntity<Role> getRolByName(@PathVariable String name) throws CustomException {
+        Optional<Role> rolOptional = rolService.getByName(name);
 
         if(rolOptional.isPresent())
-            return new ResponseEntity<Rol>(rolOptional.get(), HttpStatus.OK);
+            return new ResponseEntity<Role>(rolOptional.get(), HttpStatus.OK);
 
         throw new CustomException("No existe este rol", HttpStatus.NOT_FOUND, "404");
 
     }
 
     @PostMapping(value = "/crear")
-    public ResponseEntity<Rol> createRol(@RequestBody Rol rol) {
-        return new ResponseEntity<Rol>(rolService.create(rol), HttpStatus.CREATED);
+    public ResponseEntity<Role> createRol(@RequestBody Role role) {
+        return new ResponseEntity<Role>(rolService.create(role), HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/actualizar")
-    public ResponseEntity<Rol> updateRol(@RequestBody Rol rol) throws CustomException {
-        Rol rolActualizado = rolService.update(rol);
+    public ResponseEntity<Role> updateRol(@RequestBody Role role) throws CustomException {
+        Role roleActualizado = rolService.update(role);
 
-        if(rolActualizado == null)
+        if(roleActualizado == null)
             throw new CustomException("No se pudo actualizar el rol", HttpStatus.NOT_FOUND, "404");
 
-        return new ResponseEntity<Rol>(rolActualizado, HttpStatus.OK);
+        return new ResponseEntity<Role>(roleActualizado, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "eliminar/{id}")
-    public ResponseEntity<Rol> deleteRol(@PathVariable Long id) throws CustomException {
-        Rol rolEliminado = rolService.delete(id);
+    public ResponseEntity<Role> deleteRol(@PathVariable Long id) throws CustomException {
+        Role roleEliminado = rolService.delete(id);
 
-        if(rolEliminado == null)
+        if(roleEliminado == null)
             throw new CustomException("No se pudo eliminar el rol", HttpStatus.NOT_FOUND, "404");
 
-        return new ResponseEntity<Rol>(rolEliminado, HttpStatus.OK);
+        return new ResponseEntity<Role>(roleEliminado, HttpStatus.OK);
     }
 }

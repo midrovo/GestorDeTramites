@@ -1,5 +1,6 @@
 package com.sptmf.GestorTramite.interfaces;
 
+import com.sptmf.GestorTramite.dto.EmpleadoCreateDTO;
 import com.sptmf.GestorTramite.model.Empleado;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public interface EmpleadoInterface {
     List<Empleado> getAll();
     Optional<Empleado> getById(Long id);
     Optional<Empleado> getByCedula(String cedula);
-    Empleado create(Empleado empleado);
+    Empleado create(EmpleadoCreateDTO empleadoCreateDTO);
     Empleado update(Empleado empleado);
     Empleado delete(Long id);
 }
