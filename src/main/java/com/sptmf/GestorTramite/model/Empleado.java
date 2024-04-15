@@ -24,17 +24,17 @@ public class Empleado extends Persona {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Departamento departamento;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "usuario_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User user;
 
     @OneToMany(mappedBy = "oficinista", cascade = CascadeType.ALL)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Tramite> tramitesOficinista = new HashSet<>();
 
     @OneToMany(mappedBy = "analista", cascade = CascadeType.ALL)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Tramite> tramitesAnalista = new HashSet<>();
 
     @Override

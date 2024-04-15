@@ -1,15 +1,15 @@
 package com.sptmf.GestorTramite.interfaces;
 
-import com.sptmf.GestorTramite.model.Rol;
+import com.sptmf.GestorTramite.model.Role;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface RolInterface {
-    List<Rol> getAll();
-    Optional<Rol> getById(Long id);
-    Optional<Rol> getByName(String name);
-    Rol create(Rol rol);
-    Rol update(Rol rol);
-    Rol delete(Long id);
+    List<Role> getAll();
+    Optional<Role> getById(Long id);
+    Optional<Role> getByName(String name);
+    Role create(Role role);
+    Role update(Role role);
+    Role delete(Long id);
 }

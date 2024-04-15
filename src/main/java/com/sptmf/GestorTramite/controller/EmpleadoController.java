@@ -1,5 +1,6 @@
 package com.sptmf.GestorTramite.controller;
 
+import com.sptmf.GestorTramite.dto.EmpleadoCreateDTO;
 import com.sptmf.GestorTramite.exception.CustomException;
 import com.sptmf.GestorTramite.model.Empleado;
 import com.sptmf.GestorTramite.service.EmpleadoService;
@@ -45,8 +46,8 @@ public class EmpleadoController {
     }
 
     @PostMapping(value = "/crear")
-    public ResponseEntity<Empleado> createEmployee(@RequestBody Empleado empleado) {
-        return new ResponseEntity<Empleado>(empleadoService.create(empleado), HttpStatus.CREATED);
+    public ResponseEntity<Empleado> createEmployee(@RequestBody EmpleadoCreateDTO empleadoCreateDTO) {
+        return new ResponseEntity<Empleado>(empleadoService.create(empleadoCreateDTO), HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/actualizar")

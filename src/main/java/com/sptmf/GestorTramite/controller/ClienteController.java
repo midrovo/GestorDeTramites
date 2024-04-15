@@ -1,5 +1,7 @@
 package com.sptmf.GestorTramite.controller;
 
+import com.sptmf.GestorTramite.dto.ClienteCreateDTO;
+import com.sptmf.GestorTramite.dto.ClienteTramiteDTO;
 import com.sptmf.GestorTramite.exception.CustomException;
 import com.sptmf.GestorTramite.model.Cliente;
 import com.sptmf.GestorTramite.service.ClienteService;
@@ -33,20 +35,30 @@ public class ClienteController {
 
     }
 
-    @GetMapping(value = "/buscar/{name}")
-    public ResponseEntity<Cliente> getClientByCedula(@PathVariable String cedula) throws CustomException {
-        Optional<Cliente> clienteOptional = clienteService.getByCedula(cedula);
+    @GetMapping(value = "/buscar/{cedula}")
+    public ResponseEntity<ClienteTramiteDTO> getClientByCedula(@PathVariable String cedula) throws CustomException {
+        ClienteTramiteDTO clienteTramiteDTO = clienteService.clientTramite(cedula);
 
-        if(clienteOptional.isPresent())
-            return new ResponseEntity<Cliente>(clienteOptional.get(), HttpStatus.OK);
+        if(clienteTramiteDTO == null)
+            throw new CustomException("No existe este cliente", HttpStatus.NOT_FOUND, "404");
 
-        throw new CustomException("No existe este cliente", HttpStatus.NOT_FOUND, "404");
-
+        return new ResponseEntity<ClienteTramiteDTO>(clienteTramiteDTO, HttpStatus.OK);
     }
 
+//    @GetMapping(value = "/buscar/{cedula}")
+//    public ResponseEntity<Cliente> getClientByCedula(@PathVariable String cedula) throws CustomException {
+//        Optional<Cliente> clienteOptional = clienteService.getByCedula(cedula);
+//
+//        if(clienteOptional.isPresent())
+//            return new ResponseEntity<Cliente>(clienteOptional.get(), HttpStatus.OK);
+//
+//        throw new CustomException("No existe este cliente", HttpStatus.NOT_FOUND, "404");
+//
+//    }
+
     @PostMapping(value = "/crear")
-    public ResponseEntity<Cliente> createClient(@RequestBody Cliente cliente) {
-        return new ResponseEntity<Cliente>(clienteService.create(cliente), HttpStatus.CREATED);
+    public ResponseEntity<Cliente> createClient(@RequestBody ClienteCreateDTO clienteCreateDTO) {
+        return new ResponseEntity<Cliente>(clienteService.create(clienteCreateDTO), HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/actualizar")

@@ -1,9 +1,13 @@
 package com.sptmf.GestorTramite.service;
 
+import com.sptmf.GestorTramite.dto.UserRolDTO;
 import com.sptmf.GestorTramite.interfaces.UserInterface;
+import com.sptmf.GestorTramite.mapper.UserModelMapper;
 import com.sptmf.GestorTramite.model.User;
+import com.sptmf.GestorTramite.repository.RolRepository;
 import com.sptmf.GestorTramite.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +17,15 @@ import java.util.Optional;
 public class UserService implements UserInterface {
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    RolRepository rolRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
+    UserModelMapper userModelMapper;
 
     @Override
     public List<User> getAll() {
@@ -36,13 +49,14 @@ public class UserService implements UserInterface {
 
     @Override
     public Boolean isValidatedByUsernameAndPassword(String username, String password) {
-        Optional<User> userOptional = getByUsernameAndPassword(username, password);
+        Optional<User> userOptional = userRepository.findByUsernameAndPassword(username, password);
 
         return userOptional.isPresent();
     }
 
     @Override
     public User create(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -62,4 +76,12 @@ public class UserService implements UserInterface {
         }
         return null;
     }
+
+    @Override
+    public UserRolDTO userAuth(String username, String password) {
+        Optional<User> userOptional = getByUsernameAndPassword(username, password);
+
+        return userOptional.map(value -> userModelMapper.toUserRolDTO(value)).orElse(null);
+    }
+
 }

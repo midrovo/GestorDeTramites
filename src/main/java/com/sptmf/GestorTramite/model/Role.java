@@ -12,26 +12,27 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @Table(name = "roles")
-public class Rol {
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "nombre_rol", length = 20, nullable = false, unique = true)
-    private String rol;
+    private String name;
 
     @Column(name = "detalle", length = 100, nullable = false)
     private String detail;
 
-    @OneToMany(mappedBy = "rol", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
+    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<User> users = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Rol rol = (Rol) o;
-        return id == rol.id;
+        Role role = (Role) o;
+        return id == role.id;
     }
 
     @Override

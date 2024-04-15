@@ -1,5 +1,6 @@
 package com.sptmf.GestorTramite.interfaces;
 
+import com.sptmf.GestorTramite.dto.UserRolDTO;
 import com.sptmf.GestorTramite.model.User;
 
 import java.util.List;
@@ -14,4 +15,5 @@ public interface UserInterface {
     User create(User user);
     User update(User user);
     User delete(Long id);
+    UserRolDTO userAuth(String username, String password);
 }

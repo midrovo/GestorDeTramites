@@ -1,9 +1,11 @@
 package com.sptmf.GestorTramite.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.*;
 
 @Entity
@@ -19,12 +21,15 @@ public class Departamento {
     private String detail;
 
     @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     Set<Empleado> empleados = new HashSet<>();
 
     @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     Set<Categoria> categorias = new HashSet<>();
 
     @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     Set<Tramite> tramites = new HashSet<>();
 
     @Override

@@ -1,7 +1,7 @@
 package com.sptmf.GestorTramite.service;
 
 import com.sptmf.GestorTramite.interfaces.RolInterface;
-import com.sptmf.GestorTramite.model.Rol;
+import com.sptmf.GestorTramite.model.Role;
 import com.sptmf.GestorTramite.repository.RolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,38 +14,38 @@ public class RolService implements RolInterface {
     @Autowired
     RolRepository rolRepository;
     @Override
-    public List<Rol> getAll() {
+    public List<Role> getAll() {
         return rolRepository.findAll();
     }
 
     @Override
-    public Optional<Rol> getById(Long id) {
+    public Optional<Role> getById(Long id) {
         return rolRepository.findById(id);
     }
 
     @Override
-    public Optional<Rol> getByName(String name) {
-        return rolRepository.findByRol(name);
+    public Optional<Role> getByName(String name) {
+        return rolRepository.findByName(name);
     }
 
     @Override
-    public Rol create(Rol rol) {
-        return rolRepository.save(rol);
+    public Role create(Role role) {
+        return rolRepository.save(role);
     }
 
     @Override
-    public Rol update(Rol rol) {
-        return getById(rol.getId()).isPresent() ? rolRepository.save(rol) : null;
+    public Role update(Role role) {
+        return getById(role.getId()).isPresent() ? rolRepository.save(role) : null;
     }
 
     @Override
-    public Rol delete(Long id) {
-        Optional<Rol> rolOptional = getById(id);
+    public Role delete(Long id) {
+        Optional<Role> rolOptional = getById(id);
 
         if(rolOptional.isPresent()) {
-            Rol rol = rolOptional.get();
-            rolRepository.delete(rol);
-            return rol;
+            Role role = rolOptional.get();
+            rolRepository.delete(role);
+            return role;
         }
 
         return null;
