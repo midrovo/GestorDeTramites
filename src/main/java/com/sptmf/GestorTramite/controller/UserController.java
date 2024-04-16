@@ -12,7 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -61,8 +63,12 @@ public class UserController {
     }
 
     @PostMapping(value = "/crear")
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        return new ResponseEntity<User>(userService.create(user), HttpStatus.CREATED);
+    public ResponseEntity<User> createUser(@Valid @RequestBody UserDTO userDTO, BindingResult result) throws CustomException {
+        if(result.hasFieldErrors()) {
+            throw new CustomException("Error de campos", validation(result), HttpStatus.BAD_REQUEST, "400");
+        }
+
+        return new ResponseEntity<User>(userService.create(userDTO), HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/user-auth")
@@ -94,5 +100,15 @@ public class UserController {
             throw new CustomException("No se pudo eliminar el usuario", HttpStatus.NOT_FOUND, "404");
 
         return new ResponseEntity<User>(usuarioEliminado, HttpStatus.OK);
+    }
+
+    private Map<String, String> validation(BindingResult result) {
+        Map<String, String> errors = new HashMap<>();
+
+        result.getFieldErrors().forEach(err -> {
+            errors.put(err.getField(), "El campo " + err.getField() + " " + err.getDefaultMessage());
+        });
+
+        return errors;
     }
 }

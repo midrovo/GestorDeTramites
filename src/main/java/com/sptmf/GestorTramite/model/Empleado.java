@@ -2,7 +2,9 @@ package com.sptmf.GestorTramite.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sptmf.GestorTramite.model.herencia.Persona;
+import com.sptmf.GestorTramite.validation.ExistsByUsername;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -25,6 +27,7 @@ public class Empleado extends Persona {
     private Departamento departamento;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @NotNull
     @JoinColumn(name = "usuario_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User user;

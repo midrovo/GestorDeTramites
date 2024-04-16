@@ -1,8 +1,10 @@
 package com.sptmf.GestorTramite.service;
 
+import com.sptmf.GestorTramite.dto.UserDTO;
 import com.sptmf.GestorTramite.dto.UserRolDTO;
 import com.sptmf.GestorTramite.interfaces.UserInterface;
 import com.sptmf.GestorTramite.mapper.UserModelMapper;
+import com.sptmf.GestorTramite.model.Role;
 import com.sptmf.GestorTramite.model.User;
 import com.sptmf.GestorTramite.repository.RolRepository;
 import com.sptmf.GestorTramite.repository.UserRepository;
@@ -55,8 +57,14 @@ public class UserService implements UserInterface {
     }
 
     @Override
-    public User create(User user) {
+    public User create(UserDTO userDTO) {
+        Optional<Role> roleOptional = rolRepository.findByName(userDTO.getNameRol());
+        Role role = roleOptional.orElse(null);
+
+        User user = userModelMapper.toUser(userDTO);
+        user.setRole(role);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         return userRepository.save(user);
     }
 
@@ -82,6 +90,11 @@ public class UserService implements UserInterface {
         Optional<User> userOptional = getByUsernameAndPassword(username, password);
 
         return userOptional.map(value -> userModelMapper.toUserRolDTO(value)).orElse(null);
+    }
+
+    @Override
+    public Boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
     }
 
 }

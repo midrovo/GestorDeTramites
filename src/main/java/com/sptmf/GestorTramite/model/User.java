@@ -2,6 +2,7 @@ package com.sptmf.GestorTramite.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,12 +12,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "usuarios")
 public class User {
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "nombre_usuario", length = 20, nullable = false, unique = true)
-    @NotEmpty
+    @NotBlank
     private String username;
 
     @Column(name = "clave", nullable = false)

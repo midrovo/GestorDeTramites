@@ -51,12 +51,11 @@ public class EmpleadoService implements EmpleadoInterface {
 
     @Override
     public Empleado create(EmpleadoCreateDTO empleadoCreateDTO) {
-        User user = setUserAndRol(
-                empleadoCreateDTO.getName(),
-                empleadoCreateDTO.getLastname(),
-                empleadoCreateDTO.getCedula(),
-                empleadoCreateDTO.getNameRol()
-                );
+        String username = empleadoCreateDTO.getUsername();
+        String password = empleadoCreateDTO.getCedula();
+        String ROLE_NAME = empleadoCreateDTO.getNameRol();
+
+        User user = setUserAndRol(username, password, ROLE_NAME);
 
         Departamento departamento = departamentoModelMapper.toDepartamento(empleadoCreateDTO.getDepartamento());
         Empleado empleado = employeeModelMapper.toEmpleado(empleadoCreateDTO);
@@ -84,23 +83,14 @@ public class EmpleadoService implements EmpleadoInterface {
         return null;
     }
 
-    public String createUsername(String name, String lastname) {
-        int PRIMERA_POSICION = 0;
-        String username = name.charAt(PRIMERA_POSICION) + lastname.split(" ")[PRIMERA_POSICION];
-        return username.toLowerCase();
-    }
-
-    public User setUserAndRol(String name, String lastname, String password, String ROLE_NAME) {
+    private User setUserAndRol(String username, String password, String ROLE_NAME) {
         Optional<Role> roleOptional = rolRepository.findByName(ROLE_NAME);
         Role role = roleOptional.orElse(null);
-        User user = new User();
-        String username = createUsername(name, lastname);
-        user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(password));
+
+        User user = new User(username, passwordEncoder.encode(password));
         user.setRole(role);
 
         return user;
     }
-
 
 }

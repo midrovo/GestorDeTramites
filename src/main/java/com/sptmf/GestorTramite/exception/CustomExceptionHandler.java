@@ -8,7 +8,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class CustomExceptionHandler {
     @ExceptionHandler({ CustomException.class, })
     public ResponseEntity<ErrorDTO> customExceptionHandler(CustomException e) {
-        ErrorDTO errorDTO = ErrorDTO.builder().message(e.getMessage()).code(e.getCode()).build();
+        ErrorDTO errorDTO = ErrorDTO.builder()
+                .error(e.getError())
+                .message(e.getMessage())
+                .result(e.getResult() != null ? e.getResult() : null)
+                .code(e.getCode()).build();
+
 
         return new ResponseEntity<ErrorDTO>(errorDTO, e.getStatus());
     }

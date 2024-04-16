@@ -1,5 +1,6 @@
 package com.sptmf.GestorTramite.interfaces;
 
+import com.sptmf.GestorTramite.dto.UserDTO;
 import com.sptmf.GestorTramite.dto.UserRolDTO;
 import com.sptmf.GestorTramite.model.User;
 
@@ -12,8 +13,9 @@ public interface UserInterface {
     Optional<User> getByUsername(String username);
     Optional<User> getByUsernameAndPassword(String username, String password);
     Boolean isValidatedByUsernameAndPassword(String username, String password);
-    User create(User user);
+    User create(UserDTO userDTO);
     User update(User user);
     User delete(Long id);
     UserRolDTO userAuth(String username, String password);
+    Boolean existsByUsername(String username);
 }

@@ -1,7 +1,9 @@
 package com.sptmf.GestorTramite.interfaces;
 
 import com.sptmf.GestorTramite.dto.EmpleadoCreateDTO;
+import com.sptmf.GestorTramite.exception.CustomException;
 import com.sptmf.GestorTramite.model.Empleado;
+import org.springframework.validation.BindingResult;
 
 import java.util.List;
 import java.util.Optional;

@@ -3,13 +3,19 @@ package com.sptmf.GestorTramite.controller;
 import com.sptmf.GestorTramite.dto.EmpleadoCreateDTO;
 import com.sptmf.GestorTramite.exception.CustomException;
 import com.sptmf.GestorTramite.model.Empleado;
+import com.sptmf.GestorTramite.model.User;
 import com.sptmf.GestorTramite.service.EmpleadoService;
+import com.sptmf.GestorTramite.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -46,7 +52,13 @@ public class EmpleadoController {
     }
 
     @PostMapping(value = "/crear")
-    public ResponseEntity<Empleado> createEmployee(@RequestBody EmpleadoCreateDTO empleadoCreateDTO) {
+    public ResponseEntity<Empleado> createEmployee(@Valid @RequestBody EmpleadoCreateDTO empleadoCreateDTO,
+                                                   BindingResult result) throws CustomException {
+
+        if(result.hasFieldErrors()) {
+            throw new CustomException("Error de campos", validation(result), HttpStatus.BAD_REQUEST, "400");
+        }
+
         return new ResponseEntity<Empleado>(empleadoService.create(empleadoCreateDTO), HttpStatus.CREATED);
     }
 
@@ -68,5 +80,15 @@ public class EmpleadoController {
             throw new CustomException("No se pudo eliminar el empleado", HttpStatus.NOT_FOUND, "404");
 
         return new ResponseEntity<Empleado>(empleadoEliminado, HttpStatus.OK);
+    }
+
+    private Map<String, String> validation(BindingResult result) {
+        Map<String, String> errors = new HashMap<>();
+
+        result.getFieldErrors().forEach(err -> {
+            errors.put(err.getField(), "El campo " + err.getField() + " " + err.getDefaultMessage());
+        });
+
+        return errors;
     }
 }

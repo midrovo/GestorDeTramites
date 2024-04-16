@@ -47,7 +47,9 @@ public class ClienteService implements ClienteInterface {
 
     @Override
     public Cliente create(ClienteCreateDTO clienteCreateDTO) {
-        User user = setUserAndRol(clienteCreateDTO.getCedula(), clienteCreateDTO.getPhone());
+        String username = clienteCreateDTO.getCedula();
+        String password = clienteCreateDTO.getPhone();
+        User user = setUserAndRol(username, password);
 
         Cliente cliente = clientModelMapper.toCliente(clienteCreateDTO);
         cliente.setUser(user);
@@ -83,9 +85,8 @@ public class ClienteService implements ClienteInterface {
     public User setUserAndRol(String username, String password) {
         Optional<Role> roleOptional = rolRepository.findByName("ROLE_CLIENTE");
         Role ROLE_CLIENT = roleOptional.orElse(null);
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(password));
+
+        User user = new User(username, passwordEncoder.encode(password));
         user.setRole(ROLE_CLIENT);
 
         return user;

@@ -1,5 +1,7 @@
 package com.sptmf.GestorTramite.dto;
 
+import com.sptmf.GestorTramite.validation.ExistsByUsername;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,8 +9,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class UserDTO {
-    @NotEmpty
+    @NotBlank
+    @ExistsByUsername
     private String username;
-    @NotEmpty
+    @NotBlank
     private String password;
+    @NotBlank
+    private String nameRol;
 }
