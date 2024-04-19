@@ -12,22 +12,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService implements UserInterface {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    RolRepository rolRepository;
+    private RolRepository rolRepository;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    UserModelMapper userModelMapper;
+    private UserModelMapper userModelMapper;
 
     @Override
     public List<User> getAll() {
@@ -58,12 +60,17 @@ public class UserService implements UserInterface {
 
     @Override
     public User create(UserDTO userDTO) {
-        Optional<Role> roleOptional = rolRepository.findByName(userDTO.getNameRol());
-        Role role = roleOptional.orElse(null);
+        Set<Role> roles = new HashSet<>();
+
+        userDTO.getRoles().forEach(rol -> roles.add(rolRepository.findByName(rol).orElse(null)));
 
         User user = userModelMapper.toUser(userDTO);
-        user.setRole(role);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(roles);
+        user.setEnabled(true);
+        user.setAccountNoExpired(true);
+        user.setAccountNoLocked(true);
+        user.setCredentialNoExpired(true);
 
         return userRepository.save(user);
     }

@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 public class ProcesoService implements ProcesoInterface {
     @Autowired
-    ProcesoRepository procesoRepository;
+    private ProcesoRepository procesoRepository;
     @Override
     public List<Proceso> getAll() {
         return procesoRepository.findAll();

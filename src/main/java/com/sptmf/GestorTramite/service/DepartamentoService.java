@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 public class DepartamentoService implements DepartamentoInterface {
     @Autowired
-    DepartamentoRepository departamentoRepository;
+    private DepartamentoRepository departamentoRepository;
 
     @Override
     public List<Departamento> getAll() {

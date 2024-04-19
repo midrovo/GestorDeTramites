@@ -1,18 +1,32 @@
 package com.sptmf.GestorTramite.service;
 
+import com.sptmf.GestorTramite.dto.RolDTO;
 import com.sptmf.GestorTramite.interfaces.RolInterface;
+import com.sptmf.GestorTramite.mapper.RolModelMapper;
+import com.sptmf.GestorTramite.model.Permiso;
 import com.sptmf.GestorTramite.model.Role;
+import com.sptmf.GestorTramite.repository.PermisoRepository;
 import com.sptmf.GestorTramite.repository.RolRepository;
+import com.sptmf.GestorTramite.util.RoleEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class RolService implements RolInterface {
     @Autowired
-    RolRepository rolRepository;
+    private RolRepository rolRepository;
+
+    @Autowired
+    private PermisoRepository permisoRepository;
+
+    @Autowired
+    private RolModelMapper rolModelMapper;
+
     @Override
     public List<Role> getAll() {
         return rolRepository.findAll();
@@ -24,12 +38,19 @@ public class RolService implements RolInterface {
     }
 
     @Override
-    public Optional<Role> getByName(String name) {
+    public Optional<Role> getByName(RoleEnum name) {
         return rolRepository.findByName(name);
     }
 
     @Override
-    public Role create(Role role) {
+    public Role create(RolDTO rolDTO) {
+        Set<Permiso> permisos = new HashSet<>();
+
+        rolDTO.getPermisos().forEach(permiso -> permisos.add(permisoRepository.findByName(permiso).orElse(null)));
+
+        Role role = rolModelMapper.toRole(rolDTO);
+        role.setPermisos(permisos);
+
         return rolRepository.save(role);
     }
 

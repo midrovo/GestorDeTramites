@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 public class TramiteService implements TramiteInterface {
     @Autowired
-    TramiteRepository tramiteRepository;
+    private TramiteRepository tramiteRepository;
 
     @Override
     public List<Tramite> getAll() {

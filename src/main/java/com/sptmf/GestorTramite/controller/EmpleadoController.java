@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/empleado")
+@RequestMapping("/api/empleados")
 public class EmpleadoController {
     @Autowired
     private EmpleadoService empleadoService;
@@ -46,6 +46,18 @@ public class EmpleadoController {
 
         if(empleadoOptional.isPresent())
             return new ResponseEntity<Empleado>(empleadoOptional.get(), HttpStatus.OK);
+
+        throw new CustomException("No existe este empleado", HttpStatus.NOT_FOUND, "404");
+
+    }
+
+    @GetMapping(value = "/{username}")
+    public ResponseEntity<Empleado> getEmployeeByUsername(@PathVariable String username) throws CustomException {
+        Optional<Empleado> empleadoOptional = empleadoService.getByUsername(username);
+
+        if(empleadoOptional.isPresent()) {
+            return new ResponseEntity<Empleado>(empleadoOptional.get(), HttpStatus.OK);
+        }
 
         throw new CustomException("No existe este empleado", HttpStatus.NOT_FOUND, "404");
 

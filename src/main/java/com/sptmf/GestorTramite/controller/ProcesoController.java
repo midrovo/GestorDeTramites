@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/proceso")
+@RequestMapping("/api/procesos")
 public class ProcesoController {
     @Autowired
     private ProcesoService procesoService;

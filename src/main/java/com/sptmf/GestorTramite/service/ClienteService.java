@@ -9,6 +9,7 @@ import com.sptmf.GestorTramite.model.Role;
 import com.sptmf.GestorTramite.model.User;
 import com.sptmf.GestorTramite.repository.ClienteRepository;
 import com.sptmf.GestorTramite.repository.RolRepository;
+import com.sptmf.GestorTramite.util.RoleEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,13 +23,13 @@ public class ClienteService implements ClienteInterface {
     private ClienteRepository clienteRepository;
 
     @Autowired
-    RolRepository rolRepository;
+    private RolRepository rolRepository;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    ClientModelMapper clientModelMapper;
+    private ClientModelMapper clientModelMapper;
 
     @Override
     public List<Cliente> getAll() {
@@ -82,12 +83,17 @@ public class ClienteService implements ClienteInterface {
         return clienteOptional.map(value -> clientModelMapper.toClienteTramiteDto(value)).orElse(null);
     }
 
-    public User setUserAndRol(String username, String password) {
-        Optional<Role> roleOptional = rolRepository.findByName("ROLE_CLIENTE");
+    private User setUserAndRol(String username, String password) {
+        Optional<Role> roleOptional = rolRepository.findByName(RoleEnum.CLIENTE);
+
         Role ROLE_CLIENT = roleOptional.orElse(null);
 
         User user = new User(username, passwordEncoder.encode(password));
-        user.setRole(ROLE_CLIENT);
+        user.getRoles().add(ROLE_CLIENT);
+        user.setEnabled(true);
+        user.setAccountNoExpired(true);
+        user.setAccountNoLocked(true);
+        user.setCredentialNoExpired(true);
 
         return user;
     }

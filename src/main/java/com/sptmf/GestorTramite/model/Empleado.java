@@ -2,7 +2,6 @@ package com.sptmf.GestorTramite.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sptmf.GestorTramite.model.herencia.Persona;
-import com.sptmf.GestorTramite.validation.ExistsByUsername;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/tramite")
+@RequestMapping("/api/tramites")
 public class TramiteController {
     @Autowired
     private TramiteService tramiteService;

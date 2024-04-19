@@ -7,6 +7,10 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -28,6 +32,18 @@ public class User {
     @NotEmpty
     private String password;
 
+    @Column(name = "activo")
+    private boolean isEnabled;
+
+    @Column(name = "cuenta_no_expirada")
+    private boolean accountNoExpired;
+
+    @Column(name = "cuenta_no_bloqueada")
+    private boolean accountNoLocked;
+
+    @Column(name = "credencial_no_expirada")
+    private boolean credentialNoExpired;
+
     @OneToOne(mappedBy = "user")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Empleado empleado;
@@ -36,16 +52,20 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Cliente cliente;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "rol_id")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Role role;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
+    private Set<Role> roles = new HashSet<>();
 
-    public void createClient(Cliente cliente) {
-        cliente.setUser(this);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id);
     }
 
-    public void createEmployee(Empleado empleado) {
-        empleado.setUser(this);
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

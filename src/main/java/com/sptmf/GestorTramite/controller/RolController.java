@@ -1,8 +1,10 @@
 package com.sptmf.GestorTramite.controller;
 
+import com.sptmf.GestorTramite.dto.RolDTO;
 import com.sptmf.GestorTramite.exception.CustomException;
 import com.sptmf.GestorTramite.model.Role;
 import com.sptmf.GestorTramite.service.RolService;
+import com.sptmf.GestorTramite.util.RoleEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/rol")
+@RequestMapping("/api/roles")
 public class RolController {
     @Autowired
     private RolService rolService;
@@ -34,7 +36,7 @@ public class RolController {
     }
 
     @GetMapping(value = "/buscar/{name}")
-    public ResponseEntity<Role> getRolByName(@PathVariable String name) throws CustomException {
+    public ResponseEntity<Role> getRolByName(@PathVariable RoleEnum name) throws CustomException {
         Optional<Role> rolOptional = rolService.getByName(name);
 
         if(rolOptional.isPresent())
@@ -45,8 +47,8 @@ public class RolController {
     }
 
     @PostMapping(value = "/crear")
-    public ResponseEntity<Role> createRol(@RequestBody Role role) {
-        return new ResponseEntity<Role>(rolService.create(role), HttpStatus.CREATED);
+    public ResponseEntity<Role> createRol(@RequestBody RolDTO rolDTO) {
+        return new ResponseEntity<Role>(rolService.create(rolDTO), HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/actualizar")
