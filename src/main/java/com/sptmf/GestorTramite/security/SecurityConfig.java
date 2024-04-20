@@ -71,7 +71,8 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(sesion -> sesion.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.GET,"/api/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/clientes/**").hasAnyRole("CLIENTE", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT,"/api/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE,"/api/**").hasRole("ADMIN")
@@ -80,7 +81,6 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/tramites/**").hasAnyRole("OFICINISTA", "ANALISTA")
                         .requestMatchers(HttpMethod.POST, "/api/tramites/**").hasRole("OFICINISTA")
 
-                        .requestMatchers(HttpMethod.GET, "/api/clientes/**").hasAnyRole("CLIENTE", "OFICINISTA")
                         .anyRequest().denyAll()
                 ).build();
     }
